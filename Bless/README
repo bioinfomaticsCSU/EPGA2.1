@@ -1,0 +1,53 @@
+-----------------------------------------------------------------------------------------
+BLESS: Bloom-filter-based Error Correction Solution for High-throughput Sequencing Reads
+
+VERSION: 0.12
+DATE   : December 02, 2013
+
+Developed by: ESCAD Group, Computational Comparative Genomics Lab, and IMPACT Group
+              in Univsersity of Illinois at Urbana-Champaign
+-----------------------------------------------------------------------------------------
+
+
+Change History
+--------------------
+V0.11: 10/24/2013
+First release.
+
+V0.12: 12/02/2013
+Supporting single-end (or merged paired-end) reads.
+Correct a bug in correcting errors in the first k-mer
+
+
+System Requirements
+--------------------
+BLESS should function on any standard 64bit Linux environment with g++.
+Compiling the program requires the BOOST C++ library (http://www.boost.org)
+and the Google sparsehash library (https://code.google.com/p/sparsehash).
+
+
+How to Install BLESS
+--------------------
+Normally, just type:
+> make
+
+
+How to Run BLESS
+--------------------
+Single-end reads or merged paired-end reads
+> ./bless -read <fastq> -prefix <output prefix> -kmerlength <k-mer length>
+<fastq>        : fastq file name
+<output prefix>: <output directory name>/<file prefix>
+<k-mer length> : k-mer length (odd number)
+
+Paired-end reads
+> ./bless -read1 <forward fastq> -read2 <reverse fastq> -prefix <output prefix> -kmerlength <k-mer length>
+<forward fastq>: first read file of a paired-end fastq file
+<reverse fastq>: second read file of a paired-end fastq file
+<output prefix>: <output directory name>/<file prefix>
+<k-mer length> : k-mer length (odd number)
+
+
+Bug Reports:
+--------------------
+Yun Heo <yunheo1@illinois.edu>
