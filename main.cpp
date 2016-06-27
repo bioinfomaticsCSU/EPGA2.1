@@ -65,10 +65,10 @@ int main(int argc, char *argv[])
     ContigSet * contigSetHead = new ContigSet;
     ConstructContigSet(deBruijnGraphHead, readSet, contigSetHead, setNumber, kmerSetHashTableHead->kmerSetHashTable, kmerSetHashTableHead->kmerSetHashTableCount, kmerLength, threadNumber, extendCutOff);
     
-    char * str1 = new char[20];
-    char * str2 = new char[20];
+    char * str1 = new char[30];
+    char * str2 = new char[30];
     strcpy(str1,"contigSet.fa");
-    strcpy(str2,"contigSetLong.fa");
+    strcpy(str2,"result_ContigSet.fa");
     
     ContigSet * temp = contigSetHead->next;
     temp = contigSetHead->next;
@@ -83,9 +83,9 @@ int main(int argc, char *argv[])
     WriteContigSet(temp, str1);
     WriteContigSetLong(temp, str2);
     
-    
+    /*
     ScaffoldSetHead * scaffoldSetHead = ScaffoldingContigSet(temp, readSet, setNumber, 3*kmerLength, kmerLength, threadNumber);
     
     FillGap(scaffoldSetHead, readSet, setNumber, kmerSetHashTableHead, kmerLength, threadNumber);
-    
+    */
 }

@@ -8,9 +8,12 @@ use strict;
 	my $library_number = 0;
 	my @library_name;
 	my @library_insertsize;
+	my @library_readLength;
 	my @library_std;
 	my @library_orientation;
 	my @library_kmer;
+	my @library_sam;
+	my @library_bam;
 	
 	my $library_information = shift;
 	my $kmer_length = shift;
@@ -27,9 +30,10 @@ use strict;
 		my @infor = split /\s+/, $line;
 		$library_name[$library_number*2]=$infor[0];
 		$library_name[$library_number*2+1]=$infor[1];
-		$library_insertsize[$library_number]=$infor[2];
-		$library_std[$library_number]=$infor[3];
-		$library_orientation[$library_number]=$infor[4];
+		$library_readLength[$library_number] = $infor[2];
+		$library_insertsize[$library_number]=$infor[3];
+		$library_std[$library_number]=$infor[4];
+		$library_orientation[$library_number]=$infor[5];
 		$library_kmer[$library_number] = "library_"."$library_number";
 		$library_number++;
 	}
@@ -115,6 +119,7 @@ use strict;
 	$kmer_length = $kmer_length - 1;
 	
 	my $temp_output = "temp.dot";
+	print TIME "./KmerToDot $new_all_kmer $temp_output\n";
 	@temp = ("./KmerToDot $new_all_kmer $temp_output");
 	`@temp`;
 	unlink $new_all_kmer;
@@ -126,6 +131,7 @@ use strict;
 	
 	my $debruijn_graph = "DBGraph.fa";
 	my $simple_path = "path.dot";
+	print TIME "./bcalm $all_kmer -s $new_all_kmer -o $simple_path\n";
     @temp = ("./bcalm $all_kmer -s $new_all_kmer -o $simple_path");
 	`@temp`;
 	print TIME "SimplePathToGraph start--:";
@@ -136,7 +142,8 @@ use strict;
 	my $graph_node = int($temp);
 
 	$kmer_length--;
-
+	
+	print TIME "./SimplePathToGraph $simple_path $debruijn_graph $graph_node $kmer_length $thread_number\n";
 	@temp = ("./SimplePathToGraph $simple_path $debruijn_graph $graph_node $kmer_length $thread_number");
 	`@temp`;
 	
@@ -150,9 +157,64 @@ use strict;
         $temp_file = $temp_file.' '.$library_name[2*$k].' '.$library_name[2*$k+1].' '.$library_insertsize[$k].' '.$library_std[$k].' '.$library_orientation[$k];
 	}
 	print TIME "$kmer_hash_count\n";
-	print TIME "$temp_file\n";
+	print TIME "./EPGA $temp_file $debruijn_graph $kmer_hash $kmer_hash_count $kmer_length $thread_number\n";
 	@temp = ("./EPGA $temp_file $debruijn_graph $kmer_hash $kmer_hash_count $kmer_length $thread_number");
 	`@temp`;
+	
+	unlink glob "allkmer.dot";
+	unlink glob "all_k+1.dot";
+	unlink glob "path.dot";
+	unlink glob "CompactContig.fa";
+	unlink glob "contigSet.fa";
+	unlink glob "nonInclude.fa";
+	unlink glob "overlap11.fa";
+	unlink glob "SubContig.fa";
+	
+	
+	for(my $k=0;$k<$library_number;$k++){
+		unlink glob "library_"."$k".".dot";
+	}
+	
+	for(my $k=0;$k<$library_number;$k++){
+		$library_sam[2*$k] = "library_$k"."_left.sam";
+		$library_sam[2*$k+1] = "library_$k"."_right.sam";
+		$library_bam[2*$k] = "library_$k"."_left.bam";
+		$library_bam[2*$k+1] = "library_$k"."_right.bam";
+		@temp = ("bowtie2-build contigSetLong.fa contigs");
+		`@temp`;
+		@temp = ("bowtie2 -x contigs $library_name[2*$k] -S $library_sam[2*$k]");
+		`@temp`;
+		@temp = ("bowtie2 -x contigs $library_name[2*$k+1] -S $library_sam[2*$k+1]");
+		`@temp`;
+		@temp = ("samtools view -Sb $library_sam[2*$k] > $library_bam[2*$k]");
+		`@temp`;
+		@temp = ("samtools view -Sb $library_sam[2*$k+1] > $library_bam[2*$k+1]");
+		`@temp`;
+		unlink glob $library_sam[2*$k];
+		unlink glob $library_sam[2*$k+1];
+	}
+
+	unlink glob "contigs.*";
+	
+	$temp_file = "contigSetLong.fa";
+	my $percentage = 0.07;
+	my $pairedNumber = 2;
+	my $weightMin = 0.2;
+	my $paired = 0;
+	my $weightMethod = 0;
+	for(my $k=0;$k<$library_number;$k++){
+		if($library_orientation[$k] == 0){
+			$paired = 1;
+		}else{
+			$paired = 0;
+		}
+		$temp_file = $temp_file.' '.$library_bam[2*$k].' '.$library_bam[2*$k+1].' '.$library_readLength[$k].' '.$library_insertsize[$k].' '.$percentage.' '.$weightMin.' '.$pairedNumber.' '.$paired.' '.$weightMethod;
+	}
+	
+	print TIME "./boss $temp_file result\n";
+	@temp = ("./boss $temp_file result");
+	`@temp`;
+	
 	print TIME "end--:";
 	print TIME scalar localtime;
 	print TIME "\n";

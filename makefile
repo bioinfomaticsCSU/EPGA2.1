@@ -29,6 +29,8 @@ kmertodot.o: kmertodot.cpp
 	$(CC) -o $@ -c $< $(LDFLAGS)
 
 all: EPGA GetKmerHash SimplePathToGraph KmerToDot
+	make -C BOSS/
+	cp BOSS/boss ./
 	make -C Bcalm/
 	cp Bcalm/bcalm ./
 	make -C Bless/
@@ -39,4 +41,10 @@ all: EPGA GetKmerHash SimplePathToGraph KmerToDot
 
 clean:
 	rm -f *.o
+	rm -f BOSS/*.o
+	rm BOSS/boss
+	rm -f Bcalm/*.o
+	rm Bcalm/bcalm
+	rm -f Bless/*.o
+	rm -f Dsk/*.o
 	rm EPGA dsk bless bcalm parse_results GetKmerHash SimplePathToGraph KmerToDot

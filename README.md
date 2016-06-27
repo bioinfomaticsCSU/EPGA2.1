@@ -25,35 +25,46 @@ CHINA, 410083
 
 De Novo Assembler
 =================
+1) Introduction
 
-EPGA2 updates some modules in EPGA which can improve memory efficiency in genome asssembly.
-The read library for EPGA2 should be paired-end reads. Read length shorter than 50bp and coverage larger than 100.
+	EPGA2 updates some modules in EPGA which can improve memory efficiency in genome asssembly. 
+	EPGA2 adopts new scaffolding method which can accurately determine orientations and orders of contigs. 
+	The read library for EPGA2 should be paired-end reads. Read length shorter than 50bp and coverage larger than 100.
 
-1)Installing.
+2) Before installing and running
+	
+	Users should install Bowtie2 and Samtools firstly and add them to your PATH. EPGA2 uses Bowtie2 map read to contigs in the step of scaffolding, and convert ".sam" file to ".bam" file. 
+	Users can download Bowtie2 from http://bowtie-bio.sourceforge.net/bowtie2/index.shtml 
+	Samtools is available from http://samtools.sourceforge.net/index.shtml
 
-EPGA is written C++ and therefore will require a machine with GNU C++ pre-installed.
+3) Installing
 
-Create a main directory (eg:EPGA2). Copy all source code to this directory.
+	EPGA is written C++ and therefore will require a machine with GNU C++ pre-installed.
+	Create a main directory (eg:EPGA2). Copy all source code to this directory.
+	Type "make all".
 
-Type "make all".
+3) Running.
+	Run command line: 
+		ulimit -n 1100 //this command is used for BCALM 
+		perl EPGA.pl library.txt kmerLength threadNumber
 
-2)Running.
+	<library.txt>:
+		Each line represents one read library.
+		The first column is the first mate read file (*.fastq);
+		Tthe sencond column is the second mate read file (*.fastq);
+		The third column is length of read;
+		The fourth column is insert size of read library;
+		The fifth column is standard deviation of insert size;
+		The sixth column represents whether the read library is mate-paired (0 denotes paired-end reads, 1 denotes mate-paired reads);
+	<kmerLength>:
+		One integer (<32) which should be shorter than read length.
+	<threadNumber>:
+	Thread number of program.
 
-Run command line: 
+4) Output:
+	The contig set and scaffold set produced by EPGA2 are named result_ContigSet.fa and result_ScaffoldSet.fa respectively.
 
-ulimit -n 1100 //this command is used for BCALM 
-
-perl EPGA.pl library.txt kmerLength threadNumber
-
-Information about read libraries are stored in the file library.txt.
-Each line represents one read library.
-The first column is the first mate read file (*.fastq), the sencond column is the second mate read file (*.fastq), the third column is insert size of read library, the fourth column is standard deviation of insert size, the fifth column represents whether the read library is mate-paired (0 denotes paired-end reads, 1 denotes mate-paired reads).
-
-kmerLength is one integer (<32) shorter than read length which is used for building De Bruijn graph.
-
-threadNumber is thread number of program.
-
-3)Output.
-
-There are two files "contigSetLong.fa" and "scaffoldLong.fa" corresponding to final contigs and scaffolds.
+5) Example
+	one line in library.txt:
+		frag_1.fastq frag_2.fastq 101 180 20 0
 
