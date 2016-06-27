@@ -66,5 +66,6 @@ De Novo Assembler
 
 5) Example
 	one line in library.txt:
+	
 		frag_1.fastq frag_2.fastq 101 180 20 0
 
