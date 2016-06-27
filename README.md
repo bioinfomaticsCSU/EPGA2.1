@@ -62,9 +62,11 @@ De Novo Assembler
 	Thread number of program.
 
 4) Output:
+
 	The contig set and scaffold set produced by EPGA2 are named result_ContigSet.fa and result_ScaffoldSet.fa respectively.
 
-5) Example
+5) Example：
+
 	one line in library.txt:
 	
 		frag_1.fastq frag_2.fastq 101 180 20 0
