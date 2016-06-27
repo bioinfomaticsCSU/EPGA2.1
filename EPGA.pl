@@ -175,12 +175,14 @@ use strict;
 		unlink glob "library_"."$k".".dot";
 	}
 	
+	$temp_file = "result_ContigSet.fa";
+	
 	for(my $k=0;$k<$library_number;$k++){
 		$library_sam[2*$k] = "library_$k"."_left.sam";
 		$library_sam[2*$k+1] = "library_$k"."_right.sam";
 		$library_bam[2*$k] = "library_$k"."_left.bam";
 		$library_bam[2*$k+1] = "library_$k"."_right.bam";
-		@temp = ("bowtie2-build contigSetLong.fa contigs");
+		@temp = ("bowtie2-build $temp_file contigs");
 		`@temp`;
 		@temp = ("bowtie2 -x contigs $library_name[2*$k] -S $library_sam[2*$k]");
 		`@temp`;
@@ -196,7 +198,6 @@ use strict;
 
 	unlink glob "contigs.*";
 	
-	$temp_file = "contigSetLong.fa";
 	my $percentage = 0.07;
 	my $pairedNumber = 2;
 	my $weightMin = 0.2;
