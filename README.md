@@ -30,7 +30,7 @@ De Novo Assembler
 	EPGA2 updates some modules in EPGA which can improve memory efficiency in genome asssembly. 
 	EPGA2 adopts new scaffolding method which can accurately determine orientations and orders of contigs. 
 	The read library for EPGA2 should be paired-end reads. Read length shorter than 50bp and coverage larger than 100.
-
+	
 2) Before installing and running
 	
 	Users should install Bowtie2 and Samtools firstly and add them to your PATH. EPGA2 uses Bowtie2 for mapping read to contigs in the step of scaffolding, and uses Samtools for converting ".sam" file to ".bam" file. 
@@ -70,4 +70,13 @@ De Novo Assembler
 	one line in library.txt:
 	
 		frag_1.fastq frag_2.fastq 101 180 20 0
+
+References
+=================
+
+To cite EPGA please use the following citation:
+
+	[1] J. Luo, J. Wang* , Z. Zhang, F.X. Wu, M. Li, and Y. Pan. EPGA: de novo assembly using the distributions of reads and insert size. Bioinformatics, 2015, 31(6):825-833.
+	[2] J. Luo, J. Wang* , Z. Zhang, F.X. Wu, M. Li, and Y. Pan. EPGA2：memory-efficient de novo assembler. Bioinformatics, 2015, 31(24):3988-3990.
+
 
