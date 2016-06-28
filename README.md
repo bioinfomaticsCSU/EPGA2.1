@@ -29,7 +29,7 @@ De Novo Assembler
 
 	EPGA2 updates some modules in EPGA which can improve memory efficiency in genome asssembly. 
 	EPGA2 adopts new scaffolding method which can accurately determine orientations and orders of contigs. 
-	The read library for EPGA2 should be paired-end reads. Read length shorter than 50bp and coverage larger than 100.
+	The read library for EPGA2 should be paired-end or mate-paired reads (fastq). Read length shorter than 50bp and coverage larger than 100.
 	
 2) Before installing and running
 	
