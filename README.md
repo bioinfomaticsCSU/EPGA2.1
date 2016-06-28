@@ -61,7 +61,7 @@ De Novo Assembler
 	<kmerLength>:
 		One integer (<32) which should be shorter than read length.
 	<threadNumber>:
-	Thread number of program.
+		Thread number of program.
 
 4) Output:
 
