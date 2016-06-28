@@ -51,7 +51,7 @@ De Novo Assembler
 	perl EPGA.pl library.txt kmerLength threadNumber
 
 		<library.txt>:
-			Each line represents one read library.
+			Each row represents one read library.
 			The first column is the first mate read file (*.fastq);
 			The second column is the second mate read file (*.fastq);
 			The third column is length of read;
@@ -69,9 +69,13 @@ De Novo Assembler
 
 5) Example：
 
-	one line in library.txt:
+	If there is one paired-end read library, which includes frag_1.fastq and frag_2.fastq. The read length is 101 and the insert size is 180.
 	
+	The library.txt should include one row:
 		frag_1.fastq frag_2.fastq 101 180 20 0
+	Then, type:
+		ulimit -n 1100 
+		perl EPGA.pl library.txt 27 8
 
 References
 =================
