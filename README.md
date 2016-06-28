@@ -50,18 +50,18 @@ De Novo Assembler
 	ulimit -n 1100 //this command is used for BCALM 
 	perl EPGA.pl library.txt kmerLength threadNumber
 
-	<library.txt>:
-		Each line represents one read library.
-		The first column is the first mate read file (*.fastq);
-		The second column is the second mate read file (*.fastq);
-		The third column is length of read;
-		The fourth column is insert size of read library;
-		The fifth column is standard deviation of insert size;
-		The sixth column represents whether the read library is mate-paired (0 denotes paired-end reads, 1 denotes mate-paired reads);
-	<kmerLength>:
-		One integer (<32) which should be shorter than read length.
-	<threadNumber>:
-		Thread number of program.
+		<library.txt>:
+			Each line represents one read library.
+			The first column is the first mate read file (*.fastq);
+			The second column is the second mate read file (*.fastq);
+			The third column is length of read;
+			The fourth column is insert size of read library;
+			The fifth column is standard deviation of insert size;
+			The sixth column represents whether the read library is mate-paired (0 denotes paired-end reads, 1 denotes mate-paired reads);
+		<kmerLength>:
+			One integer (<32) which should be shorter than read length.
+		<threadNumber>:
+			Thread number of program.
 
 4) Output:
 
