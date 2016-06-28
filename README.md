@@ -33,7 +33,7 @@ De Novo Assembler
 	
 2) Before installing and running
 	
-	Users should install Bowtie2 and Samtools firstly and add them to your PATH. EPGA2 uses Bowtie2 for mapping read to contigs in the step of scaffolding, and uses Samtools for converting ".sam" file to ".bam" file. 
+	Users should install Bowtie2 and Samtools firstly, and add them to the environment variable PATH. EPGA2 uses Bowtie2 for mapping read to contigs and Samtools for converting ".sam" file to ".bam" file in the step of scaffolding. 
 	Users can download Bowtie2 from http://bowtie-bio.sourceforge.net/bowtie2/index.shtml 
 	Samtools is available from http://samtools.sourceforge.net/index.shtml
 
