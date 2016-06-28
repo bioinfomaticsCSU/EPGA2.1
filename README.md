@@ -44,9 +44,11 @@ De Novo Assembler
 	Type "make all".
 
 3) Running.
+
 	Run command line: 
-		ulimit -n 1100 //this command is used for BCALM 
-		perl EPGA.pl library.txt kmerLength threadNumber
+	
+	ulimit -n 1100 //this command is used for BCALM 
+	perl EPGA.pl library.txt kmerLength threadNumber
 
 	<library.txt>:
 		Each line represents one read library.
